@@ -335,13 +335,14 @@ canvas[id^="live2d"],
   // collapse behavior
   var style = document.createElement('style');
   style.textContent = ''
-    + '.ap-collapsed { width: 66px !important; height: 26px !important; border-radius: 4px !important; overflow: hidden !important; }'
-    + '.ap-collapsed .aplayer-body { opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; }'
+    + '.ap-collapsed { width: 80px !important; height: 28px !important; border-radius: 4px !important; overflow: hidden !important; display: flex !important; align-items: center !important; justify-content: center !important; }'
+    + '.ap-collapsed .aplayer-body { display: none !important; }'
     + '.ap-collapsed .aplayer-list { display: none !important; }'
     + '.ap-collapsed:hover { width: 280px !important; height: auto !important; }'
-    + '.ap-collapsed:hover .aplayer-body { opacity: 1 !important; visibility: visible !important; pointer-events: auto !important; }'
+    + '.ap-collapsed:hover .aplayer-body { display: flex !important; }'
     + '.ap-collapsed:hover .aplayer-list { display: block !important; }'
-    + '.ap-collapsed .aplayer-icon-menu { opacity: 1 !important; visibility: visible !important; margin: 0 auto !important; display: block !important; }';
+    + '.ap-collapsed .aplayer-icon-menu { opacity: 1 !important; visibility: visible !important; }'
+    + '.ap-collapsed::after { content: "\\f077"; font-family: "Font Awesome 6 Free"; font-weight: 900; font-size: 10px; color: #999; margin-left: 4px; }';
   document.head.appendChild(style);
   // wait for APlayer to initialize (after CSS/JS load)
   var attempts = 0;
@@ -362,7 +363,7 @@ canvas[id^="live2d"],
   }, 500);
 })();
 </script>
-<div class="aplayer no-destroy" data-id="6831019121" data-server="netease" data-type="playlist" data-fixed="true" data-mini="true" data-listFolded="false" data-order="random" data-preload="none" data-autoplay="false" muted></div>
+<div class="aplayer no-destroy" data-id="6831019121" data-server="netease" data-type="playlist" data-fixed="true" data-mini="true" data-listFolded="false" data-order="random" data-preload="none" data-autoplay="true" muted></div>
 <script src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script>
 <script src="https://cdn1.tianli0.top/npm/js-heo@1.0.12/metingjs/Meting.min.js"></script>
 <script>
