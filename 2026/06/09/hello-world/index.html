@@ -208,6 +208,35 @@ canvas[id^="live2d"],
 #rightside-config { display: none !important; }
 /* 滚动百分比后面加百分号 */
 #go-up .scroll-percent::after { content: '%'; }
+/* 音乐播放器收起时只显示展开按钮 */
+.aplayer.aplayer-fixed.aplayer-mini {
+  width: 32px !important;
+  height: 32px !important;
+  border-radius: 50% !important;
+  overflow: hidden !important;
+  transition: width 0.3s, height 0.3s, border-radius 0.3s !important;
+}
+.aplayer.aplayer-fixed.aplayer-mini .aplayer-body,
+.aplayer.aplayer-fixed.aplayer-mini .aplayer-list {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transition: opacity 0.3s, visibility 0.3s !important;
+}
+.aplayer.aplayer-fixed.aplayer-mini:hover {
+  width: 280px !important;
+  height: auto !important;
+  border-radius: 4px !important;
+  overflow: visible !important;
+}
+.aplayer.aplayer-fixed.aplayer-mini:hover .aplayer-body,
+.aplayer.aplayer-fixed.aplayer-mini:hover .aplayer-list {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+.aplayer.aplayer-fixed.aplayer-mini .aplayer-icon-menu {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
 </style>
 <meta name="generator" content="Hexo 8.1.2"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
   const $loadingBox = document.getElementById('loading-box')
@@ -365,25 +394,28 @@ L2Dwidget.init({
 });
 </script>
 <script>
-setTimeout(() => {
-  const footer = document.getElementById('footer');
-  if (footer) {
-    const div = document.createElement('div');
+(function() {
+  var initRuntime = function() {
+    var footer = document.getElementById('footer');
+    if (!footer) { setTimeout(initRuntime, 200); return; }
+    var div = document.createElement('div');
     div.id = 'runtime';
     div.style.cssText = 'font-size:13px;color:#666;margin-top:8px;padding:6px 0;text-align:center;';
     footer.appendChild(div);
-    const start = new Date('2026-06-09');
-    setInterval(() => {
-      const now = new Date();
-      const diff = Math.floor((now - start) / 1000);
-      const d = Math.floor(diff / 86400);
-      const h = Math.floor(diff % 86400 / 3600);
-      const m = Math.floor(diff % 3600 / 60);
-      const s = diff % 60;
-      div.textContent = `⏱ 博客已运行 ${d} 天 ${h} 时 ${m} 分 ${s} 秒`;
+    var start = new Date('2026-06-09');
+    setInterval(function() {
+      var now = new Date();
+      var diff = Math.floor((now - start) / 1000);
+      var d = Math.floor(diff / 86400);
+      var h = Math.floor(diff % 86400 / 3600);
+      var m = Math.floor(diff % 3600 / 60);
+      var s = diff % 60;
+      div.textContent = '⏱ 博客已运行 ' + d + ' 天 ' + h + ' 时 ' + m + ' 分 ' + s + ' 秒';
     }, 1000);
-  }
-}, 500);
+  };
+  if (document.readyState === 'complete') { initRuntime(); }
+  else { window.addEventListener('load', initRuntime); }
+})();
 </script>
 <script>
 document.addEventListener('click', function(e) {
