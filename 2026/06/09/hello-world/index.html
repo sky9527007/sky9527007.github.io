@@ -333,11 +333,13 @@ canvas[id^="live2d"],
   // collapse behavior
   var style = document.createElement('style');
   style.textContent = ''
-    + '.ap-collapsed { width: 32px !important; height: 32px !important; border-radius: 50% !important; overflow: hidden !important; }'
-    + '.ap-collapsed .aplayer-body, .ap-collapsed .aplayer-list { opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; }'
-    + '.ap-collapsed:hover { width: 280px !important; height: auto !important; border-radius: 4px !important; overflow: visible !important; }'
-    + '.ap-collapsed:hover .aplayer-body, .ap-collapsed:hover .aplayer-list { opacity: 1 !important; visibility: visible !important; pointer-events: auto !important; }'
-    + '.ap-collapsed .aplayer-icon-menu { opacity: 1 !important; visibility: visible !important; }';
+    + '.ap-collapsed { width: 66px !important; height: 26px !important; border-radius: 4px !important; overflow: hidden !important; }'
+    + '.ap-collapsed .aplayer-body { opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; }'
+    + '.ap-collapsed .aplayer-list { display: none !important; }'
+    + '.ap-collapsed:hover { width: 280px !important; height: auto !important; }'
+    + '.ap-collapsed:hover .aplayer-body { opacity: 1 !important; visibility: visible !important; pointer-events: auto !important; }'
+    + '.ap-collapsed:hover .aplayer-list { display: block !important; }'
+    + '.ap-collapsed .aplayer-icon-menu { opacity: 1 !important; visibility: visible !important; margin: 0 auto !important; display: block !important; }';
   document.head.appendChild(style);
   // wait for APlayer to initialize (after CSS/JS load)
   var attempts = 0;
