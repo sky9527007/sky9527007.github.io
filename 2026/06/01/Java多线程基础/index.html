@@ -341,18 +341,22 @@ canvas[id^="live2d"],
     + '.ap-collapsed:hover .aplayer-body, .ap-collapsed:hover .aplayer-list { opacity: 1 !important; visibility: visible !important; pointer-events: auto !important; }'
     + '.ap-collapsed .aplayer-icon-menu { opacity: 1 !important; visibility: visible !important; }';
   document.head.appendChild(style);
-  // wait for APlayer to initialize
+  // wait for APlayer to initialize (after CSS/JS load)
+  var attempts = 0;
   var check = setInterval(function(){
     var ap = document.querySelector('.aplayer.aplayer-fixed');
     if (ap) {
       clearInterval(check);
-      ap.classList.add('ap-collapsed');
-      ap.addEventListener('click', function(e){
-        if (e.target.closest('.aplayer-icon-menu')) {
-          ap.classList.toggle('ap-collapsed');
-        }
-      });
+      setTimeout(function(){
+        ap.classList.add('ap-collapsed');
+        ap.addEventListener('click', function(e){
+          if (e.target.closest('.aplayer-icon-menu')) {
+            ap.classList.toggle('ap-collapsed');
+          }
+        });
+      }, 300);
     }
+    if (++attempts > 60) clearInterval(check); // timeout after 30s
   }, 500);
 })();
 </script>
@@ -376,28 +380,22 @@ L2Dwidget.init({
   "log": false
 });
 </script>
+<div id="runtime" style="font-size:13px;color:#666;margin-top:8px;padding:6px 0;text-align:center;"></div>
 <script>
 (function() {
-  var initRuntime = function() {
-    var footer = document.getElementById('footer');
-    if (!footer) { setTimeout(initRuntime, 200); return; }
-    var div = document.createElement('div');
-    div.id = 'runtime';
-    div.style.cssText = 'font-size:13px;color:#666;margin-top:8px;padding:6px 0;text-align:center;';
-    footer.appendChild(div);
-    var start = new Date('2026-06-09');
-    setInterval(function() {
-      var now = new Date();
-      var diff = Math.floor((now - start) / 1000);
-      var d = Math.floor(diff / 86400);
-      var h = Math.floor(diff % 86400 / 3600);
-      var m = Math.floor(diff % 3600 / 60);
-      var s = diff % 60;
-      div.textContent = '⏱ 博客已运行 ' + d + ' 天 ' + h + ' 时 ' + m + ' 分 ' + s + ' 秒';
-    }, 1000);
-  };
-  if (document.readyState === 'complete') { initRuntime(); }
-  else { window.addEventListener('load', initRuntime); }
+  var el = document.getElementById('runtime');
+  if (!el) return;
+  var start = new Date('2026-06-09');
+  function update() {
+    var diff = Math.floor((Date.now() - start) / 1000);
+    var d = Math.floor(diff / 86400);
+    var h = Math.floor((diff % 86400) / 3600);
+    var m = Math.floor((diff % 3600) / 60);
+    var s = diff % 60;
+    el.textContent = '博客已运行 ' + d + ' 天 ' + h + ' 时 ' + m + ' 分 ' + s + ' 秒';
+  }
+  update();
+  setInterval(update, 1000);
 })();
 </script>
 <script>
