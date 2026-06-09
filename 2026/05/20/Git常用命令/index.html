@@ -209,35 +209,6 @@ canvas[id^="live2d"],
 #rightside-config { display: none !important; }
 /* 滚动百分比后面加百分号 */
 #go-up .scroll-percent::after { content: '%'; }
-/* 音乐播放器收起时只显示展开按钮 */
-.aplayer.aplayer-fixed.aplayer-mini {
-  width: 32px !important;
-  height: 32px !important;
-  border-radius: 50% !important;
-  overflow: hidden !important;
-  transition: width 0.3s, height 0.3s, border-radius 0.3s !important;
-}
-.aplayer.aplayer-fixed.aplayer-mini .aplayer-body,
-.aplayer.aplayer-fixed.aplayer-mini .aplayer-list {
-  opacity: 0 !important;
-  visibility: hidden !important;
-  transition: opacity 0.3s, visibility 0.3s !important;
-}
-.aplayer.aplayer-fixed.aplayer-mini:hover {
-  width: 280px !important;
-  height: auto !important;
-  border-radius: 4px !important;
-  overflow: visible !important;
-}
-.aplayer.aplayer-fixed.aplayer-mini:hover .aplayer-body,
-.aplayer.aplayer-fixed.aplayer-mini:hover .aplayer-list {
-  opacity: 1 !important;
-  visibility: visible !important;
-}
-.aplayer.aplayer-fixed.aplayer-mini .aplayer-icon-menu {
-  opacity: 1 !important;
-  visibility: visible !important;
-}
 </style>
 <meta name="generator" content="Hexo 8.1.2"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
   const $loadingBox = document.getElementById('loading-box')
@@ -349,32 +320,42 @@ canvas[id^="live2d"],
   } else {
     window.loadOtherComment = loadGiscus
   }
-})()</script></div><div class="aplayer no-destroy"
-  data-id="6831019121"
-  data-server="netease"
-  data-type="playlist"
-  data-fixed="true"
-  data-mini="true"
-  data-listFolded="false"
-  data-order="random"
-  data-preload="none"
-  data-autoplay="false"
-  muted>
-</div>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css">
+})()</script></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css">
+<script>
+(function(){
+  // collapse behavior
+  var style = document.createElement('style');
+  style.textContent = ''
+    + '.ap-collapsed { width: 32px !important; height: 32px !important; border-radius: 50% !important; overflow: hidden !important; }'
+    + '.ap-collapsed .aplayer-body, .ap-collapsed .aplayer-list { opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; }'
+    + '.ap-collapsed:hover { width: 280px !important; height: auto !important; border-radius: 4px !important; overflow: visible !important; }'
+    + '.ap-collapsed:hover .aplayer-body, .ap-collapsed:hover .aplayer-list { opacity: 1 !important; visibility: visible !important; pointer-events: auto !important; }'
+    + '.ap-collapsed .aplayer-icon-menu { opacity: 1 !important; visibility: visible !important; }';
+  document.head.appendChild(style);
+  // wait for APlayer to initialize
+  var check = setInterval(function(){
+    var ap = document.querySelector('.aplayer.aplayer-fixed');
+    if (ap) {
+      clearInterval(check);
+      ap.classList.add('ap-collapsed');
+      ap.addEventListener('click', function(e){
+        if (e.target.closest('.aplayer-icon-menu')) {
+          ap.classList.toggle('ap-collapsed');
+        }
+      });
+    }
+  }, 500);
+})();
+</script>
+<div class="aplayer no-destroy" data-id="6831019121" data-server="netease" data-type="playlist" data-fixed="true" data-mini="true" data-listFolded="false" data-order="random" data-preload="none" data-autoplay="false" muted></div>
 <script src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script>
 <script src="https://cdn1.tianli0.top/npm/js-heo@1.0.12/metingjs/Meting.min.js"></script>
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-    if (typeof loadMeting === 'function') {
-      loadMeting();
-    }
+    if (typeof loadMeting === 'function') loadMeting();
   });
-  // 兜底：如果 DOMContentLoaded 已触发，直接调用
   if (document.readyState === 'complete' || document.readyState === 'interactive') {
-    setTimeout(function() {
-      if (typeof loadMeting === 'function') loadMeting();
-    }, 500);
+    setTimeout(function() { if (typeof loadMeting === 'function') loadMeting(); }, 500);
   }
 </script>
 <script src="https://cdn.jsdelivr.net/npm/live2d-widget@3.0.4/lib/L2Dwidget.min.js"></script>
